@@ -1,0 +1,201 @@
+{
+  "info": {
+    "name": "Blacklist Service API",
+    "description": "Colección de endpoints para el servicio de blacklist",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5001"
+    },
+    {
+      "key": "bearerToken",
+      "value": "BearerToken123"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Email to Blacklist",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"spam@example.com\",\n  \"app_uuid\": \"12345-app-uuid\",\n  \"blocked_reason\": \"Sending spam emails\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/blacklists",
+          "host": ["{{baseUrl}}"],
+          "path": ["blacklists"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check Email in Blacklist - Found",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/blacklists/spam@example.com",
+          "host": ["{{baseUrl}}"],
+          "path": ["blacklists", "spam@example.com"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check Email in Blacklist - Not Found",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/blacklists/clean@example.com",
+          "host": ["{{baseUrl}}"],
+          "path": ["blacklists", "clean@example.com"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Email - Missing Fields (Error)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"incomplete@example.com\"\n  // Falta app_uuid requerido\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/blacklists",
+          "host": ["{{baseUrl}}"],
+          "path": ["blacklists"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Email - Unauthorized (Error)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer WrongToken",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"unauthorized@example.com\",\n  \"app_uuid\": \"12345-app-uuid\",\n  \"blocked_reason\": \"Testing unauthorized access\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/blacklists",
+          "host": ["{{baseUrl}}"],
+          "path": ["blacklists"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Check Email - Unauthorized (Error)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer WrongToken",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/blacklists/test@example.com",
+          "host": ["{{baseUrl}}"],
+          "path": ["blacklists", "test@example.com"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Duplicate Email (Error)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{bearerToken}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"spam@example.com\",\n  \"app_uuid\": \"67890-app-uuid\",\n  \"blocked_reason\": \"Attempting to add duplicate email\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/blacklists",
+          "host": ["{{baseUrl}}"],
+          "path": ["blacklists"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
