@@ -4,6 +4,7 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from src.database import db
 from src.schemas import ma
+from src.models import BlacklistEntry  # ✅ Importar modelos para que SQLAlchemy los reconozca
 from src.resources.blacklist_check_resource import BlacklistResource
 from src.resources.blacklist_resource import BlacklistCheckResource
 import os
