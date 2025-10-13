@@ -22,9 +22,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r blacklist-service/requirements.txt
 
       - name: Run tests with pytest
+        working-directory: blacklist-service
         env:
           DATABASE_URL: sqlite:///local.db
           JWT_SECRET_KEY: test_secret
@@ -32,6 +33,7 @@ jobs:
         run: pytest -v
 
       - name: Lint check
+        working-directory: blacklist-service
         run: |
           pip install flake8
           flake8 src --max-line-length=120 --ignore=E501
