@@ -3,11 +3,17 @@ from src.app import create_app
 from src.database import db
 from src.models import BlacklistEntry
 
+def create_test_app():
+    """Helper function to create app with test configuration"""
+    test_config = {
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"
+    }
+    return create_app(config=test_config)
+
 def test_add_blacklist_entry_unauthorized():
     """Test POST sin autorización"""
-    app = create_app()
-    app.config["TESTING"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    app = create_test_app()
 
     with app.app_context():
         db.create_all()
@@ -28,9 +34,7 @@ def test_add_blacklist_entry_unauthorized():
 
 def test_add_blacklist_entry_missing_fields():
     """Test POST con campos faltantes"""
-    app = create_app()
-    app.config["TESTING"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    app = create_test_app()
 
     with app.app_context():
         db.create_all()
@@ -50,9 +54,7 @@ def test_add_blacklist_entry_missing_fields():
 
 def test_add_blacklist_entry_duplicate_email():
     """Test POST con email duplicado"""
-    app = create_app()
-    app.config["TESTING"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    app = create_test_app()
 
     with app.app_context():
         db.create_all()

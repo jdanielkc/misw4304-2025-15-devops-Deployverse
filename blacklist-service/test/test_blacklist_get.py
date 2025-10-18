@@ -3,9 +3,12 @@ from src.database import db
 from src.models import BlacklistEntry
 
 def test_get_blacklist_entry():
-    app = create_app()
-    app.config["TESTING"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    # Configuración específica para tests
+    test_config = {
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"
+    }
+    app = create_app(config=test_config)
 
     with app.app_context():
         db.create_all()
@@ -34,9 +37,11 @@ def test_get_blacklist_entry():
 
 def test_get_blacklist_entry_unauthorized():
     """Test GET sin autorización"""
-    app = create_app()
-    app.config["TESTING"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    test_config = {
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"
+    }
+    app = create_app(config=test_config)
 
     with app.app_context():
         db.create_all()
@@ -53,9 +58,11 @@ def test_get_blacklist_entry_unauthorized():
 
 def test_get_blacklist_entry_not_found():
     """Test GET para email no en blacklist"""
-    app = create_app()
-    app.config["TESTING"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    test_config = {
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"
+    }
+    app = create_app(config=test_config)
 
     with app.app_context():
         db.create_all()

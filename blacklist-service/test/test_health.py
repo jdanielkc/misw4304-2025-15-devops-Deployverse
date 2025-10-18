@@ -2,9 +2,11 @@ from src.app import create_app
 from src.database import db
 
 def test_health_endpoint():
-    app = create_app()
-    app.config["TESTING"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    test_config = {
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:"
+    }
+    app = create_app(config=test_config)
 
     with app.app_context():
         db.create_all()

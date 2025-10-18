@@ -31,7 +31,7 @@ jobs:
           JWT_SECRET_KEY: test_secret
           STATIC_TOKEN: BearerToken123
           PYTHONPATH: .
-        run: pytest -v
+        run: pytest -v --cov=src --tb=short
 
       - name: Lint check
         working-directory: blacklist-service

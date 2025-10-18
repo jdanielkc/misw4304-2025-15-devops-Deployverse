@@ -10,14 +10,18 @@ from src.resources.blacklist_resource import BlacklistCheckResource
 import os
 
 
-def create_app():
+def create_app(config=None):
     app = Flask(__name__)
     CORS(app)
 
-    # Configuración de base de datos - PostgreSQL RDS
+    # Configuración por defecto - PostgreSQL RDS
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:postgres@database-blacklist.csn4mkcmaeu1.us-east-1.rds.amazonaws.com:5432/blacklistdb"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["JWT_SECRET_KEY"] = "secret123"
+    
+    # Aplicar configuración personalizada si se proporciona (para tests)
+    if config:
+        app.config.update(config)
 
     # Inicialización
     db.init_app(app)
