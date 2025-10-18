@@ -1,6 +1,7 @@
 from src.database import db
 from datetime import datetime
 
+
 class BlacklistEntry(db.Model):
     __tablename__ = "blacklist_entries"
 

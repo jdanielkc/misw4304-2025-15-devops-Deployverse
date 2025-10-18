@@ -1,9 +1,11 @@
 from flask_restful import Resource
 from flask import request
-from src.models import BlacklistEntry
-from src.schemas import BlacklistSchema
+from ..models import BlacklistEntry
+from ..schemas import BlacklistSchema
+
 STATIC_TOKEN = "BearerToken123"
 blacklist_schema = BlacklistSchema()
+
 
 class BlacklistCheckResource(Resource):
     def get(self, email):

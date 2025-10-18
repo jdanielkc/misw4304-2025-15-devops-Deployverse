@@ -2,12 +2,10 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
-from src.database import db
-from src.schemas import ma
-from src.models import BlacklistEntry  # ✅ Importar modelos para que SQLAlchemy los reconozca
-from src.resources.blacklist_check_resource import BlacklistResource
-from src.resources.blacklist_resource import BlacklistCheckResource
-import os
+from .database import db
+from .schemas import ma
+from .resources.blacklist_check_resource import BlacklistResource
+from .resources.blacklist_resource import BlacklistCheckResource
 
 
 def create_app(config=None):
@@ -15,10 +13,15 @@ def create_app(config=None):
     CORS(app)
 
     # Configuración por defecto - PostgreSQL RDS
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:postgres@database-blacklist.csn4mkcmaeu1.us-east-1.rds.amazonaws.com:5432/blacklistdb"
+    db_uri = (
+        "postgresql://postgres:postgres@"
+        "database-blacklist.csn4mkcmaeu1.us-east-1.rds.amazonaws.com:5432/"
+        "blacklistdb"
+    )
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["JWT_SECRET_KEY"] = "secret123"
-    
+
     # Aplicar configuración personalizada si se proporciona (para tests)
     if config:
         app.config.update(config)

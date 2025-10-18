@@ -1,7 +1,8 @@
 from flask_marshmallow import Marshmallow
-from src.models import BlacklistEntry
+from .models import BlacklistEntry
 
 ma = Marshmallow()
+
 
 class BlacklistSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

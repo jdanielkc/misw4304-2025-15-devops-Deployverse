@@ -1,11 +1,12 @@
 from flask import request
 from flask_restful import Resource
-from src.models import BlacklistEntry
-from src.schemas import BlacklistSchema
-from src.database import db
+from ..models import BlacklistEntry
+from ..schemas import BlacklistSchema
+from ..database import db
 
 STATIC_TOKEN = "BearerToken123"
 blacklist_schema = BlacklistSchema()
+
 
 class BlacklistResource(Resource):
     def post(self):
@@ -28,6 +29,6 @@ class BlacklistResource(Resource):
         try:
             db.session.commit()
             return blacklist_schema.dump(entry), 201
-        except Exception as e:
+        except Exception:
             db.session.rollback()
             return {"error": "Email already exists or database error"}, 400
