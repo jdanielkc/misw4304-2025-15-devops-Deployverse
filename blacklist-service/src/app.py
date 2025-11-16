@@ -48,4 +48,4 @@ if __name__ == "__main__":
     # Create and run the app only when executed as a script. This avoids
     # starting the development server during imports (e.g. pytest).
     _app = create_app()
-    _app.run(host="0.0.0.0", port=8000, debug=True)
+    _app.run(host="0.0.0.0", port=5000, debug=True)

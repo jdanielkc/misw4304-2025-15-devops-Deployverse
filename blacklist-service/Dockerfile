@@ -20,7 +20,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Exponer el puerto que usa Gunicorn
-EXPOSE 8000
+EXPOSE 5000
 
 # Comando para ejecutar la aplicación con Gunicorn
 CMD ["gunicorn", "--config", "gunicorn.conf.py", "application:application"]

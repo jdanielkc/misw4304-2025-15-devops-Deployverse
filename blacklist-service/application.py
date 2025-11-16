@@ -25,4 +25,4 @@ except ImportError as e:
 # Elastic Beanstalk espera la variable 'application'
 if __name__ == "__main__":
     # En desarrollo local, usar la misma configuración que src/app.py
-    application.run(host="0.0.0.0", port=8000, debug=False)
+    application.run(host="0.0.0.0", port=5000, debug=False)

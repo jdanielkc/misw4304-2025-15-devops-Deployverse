@@ -127,7 +127,7 @@ JWT_SECRET_KEY=secret123
 
 ### Configuración por defecto
 
-- **Puerto**: 8000
+- **Puerto**: 5000
 - **Host**: 0.0.0.0 (todas las interfaces)
 - **Base de datos**: SQLite local (`local.db`)
 - **Token**: `BearerToken123`
@@ -150,12 +150,12 @@ PYTHONPATH=. python src/app.py
 PYTHONPATH=. python application.py
 ```
 
-La aplicación estará disponible en: `http://localhost:8000`
+La aplicación estará disponible en: `http://localhost:5000`
 
 ### Verificar que funciona
 
 ```bash
-curl http://localhost:8000/health
+curl http://localhost:5000/health
 ```
 
 Respuesta esperada: `{"status": "ok"}`
@@ -181,7 +181,7 @@ zip -r blacklist-app.zip . -x "*.git*" "__pycache__/*" "*.pyc" ".DS_Store" ".cov
 ### Base URL
 
 ```
-http://localhost:8000
+http://localhost:5000
 ```
 
 ### Autenticación
