@@ -29,19 +29,27 @@ phases:
     commands:
       - echo "Pushing image to ECR..."
       - docker push 127214179230.dkr.ecr.us-east-1.amazonaws.com/entrega_3_blacklist:latest
-      - echo "Generating imagedefinitions.json..."
+      - echo "Generating artifact files..."
       - IMAGE_URI="127214179230.dkr.ecr.us-east-1.amazonaws.com/entrega_3_blacklist:latest"
       - printf '[{"name":"blacklist_entrega3","imageUri":"%s"}]' "$IMAGE_URI" > imagedefinitions.json
+      - printf '{"ImageURI":"%s"}' "$IMAGE_URI" > imageDetail.json
       - echo "Artifacts generated."
+      - cat imagedefinitions.json 
 
 reports:
   pytest_reports:
     files:
       - "htmlcov/**/*"
     base-directory: blacklist-service
-
 artifacts:
   files:
     - imagedefinitions.json
-    - appspec.json
-    - taskdef.json
+    - imageDetail.json
+  secondary-artifacts:
+    DefinitionArtifact:
+      files:
+        - appspec.json
+        - taskdef.json
+    ImageArtifact:
+      files:
+        - imageDetail.json
