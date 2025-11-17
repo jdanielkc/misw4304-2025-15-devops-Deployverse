@@ -8,7 +8,7 @@ phases:
       - echo Installing dependencies for testing...
       - cd blacklist-service
       - pip install -r requirements.txt
-      
+
   pre_build:
     commands:
       - echo Running unit tests...
@@ -16,27 +16,45 @@ phases:
       - echo Tests completed successfully
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 127214179230.dkr.ecr.us-east-1.amazonaws.com
-      
+
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t blacklist_app .
-      - docker tag blacklist_app:latest 127214179230.dkr.ecr.us-east-1.amazonaws.com/blacklist_app:latest
-      
+      - docker build -t entrega_3_blacklist .
+      - docker tag entrega_3_blacklist:latest 127214179230.dkr.ecr.us-east-1.amazonaws.com/entrega_3_blacklist:latest
+
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 127214179230.dkr.ecr.us-east-1.amazonaws.com/blacklist_app:latest
+      - docker push 127214179230.dkr.ecr.us-east-1.amazonaws.com/entrega_3_blacklist:latest
+      - echo Creating deployment artifacts...
+      - IMAGE_URI="127214179230.dkr.ecr.us-east-1.amazonaws.com/entrega_3_blacklist:latest"
+      - printf '[ { "name": "blacklist_entrega3", "imageUri": "%s" } ]' "$IMAGE_URI" > imagedefinitions.json
+      - printf '{ "imageDetail": { "imageUri": "%s" } }' "$IMAGE_URI" > imageDetail.json
+      - echo "Generated imagedefinitions.json and imageDetail.json"
+      - echo "imagedefinitions.json contents:" && cat imagedefinitions.json || true
+      - echo "imageDetail.json contents:" && cat imageDetail.json || true
 
 reports:
   pytest_reports:
     files:
-      - 'htmlcov/**/*'
+      - "htmlcov/**/*"
     base-directory: blacklist-service
-    
+
 artifacts:
   files:
     - "**/*"
+    - imagedefinitions.json
+    - imageDetail.json
+  secondary-artifacts:
+    DefinitionArtifact:
+      files:
+        - appspec.json
+        - taskdef.json
+    ImageArtifact:
+      files:
+        - imageDetail.json
+
   base-directory: blacklist-service
