@@ -32,7 +32,6 @@ phases:
       - echo "Generating imagedefinitions.json..."
       - IMAGE_URI="127214179230.dkr.ecr.us-east-1.amazonaws.com/entrega_3_blacklist:latest"
       - printf '[{"name":"blacklist_entrega3","imageUri":"%s"}]' "$IMAGE_URI" > imagedefinitions.json
-      - printf '{"imageDetail":{"imageUri":"%s"}}' "$IMAGE_URI" > imageDetail.json
       - echo "Artifacts generated."
 
 reports:
@@ -44,6 +43,5 @@ reports:
 artifacts:
   files:
     - imagedefinitions.json
-    - imageDetail.json
     - appspec.json
     - taskdef.json
