@@ -22,7 +22,7 @@ phases:
   build:
     commands:
       - echo "Building Docker image..."
-      - docker build -t entrega_3_blacklist . 
+      - docker build -t entrega_3_blacklist blacklist-service
       - docker tag entrega_3_blacklist:latest 127214179230.dkr.ecr.us-east-1.amazonaws.com/entrega_3_blacklist:latest
 
   post_build:
